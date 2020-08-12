@@ -30,6 +30,7 @@ pipeline {
             sh 'ls'
             deleteDir()
             sh 'ls'
+            stash 'code'
 
           }
         }
