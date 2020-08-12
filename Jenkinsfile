@@ -72,7 +72,11 @@ pipeline {
         }
     }
     stage('component test') {
-      when {not{env.BRANCH_NAME.startsWith('dev/')}}
+      when {
+        not {
+          branch "dev/*"
+            }
+           }
       options {
         skipDefaultCheckout true
               }
