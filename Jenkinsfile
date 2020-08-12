@@ -5,6 +5,11 @@ pipeline {
   }
 
   stages {
+    stage('clone down') {
+      steps {
+        stash excludes: '.git', name: 'code'
+          }
+        }
     stage('Parallel execution') {
       parallel {
         stage('Build') {
@@ -28,19 +33,13 @@ pipeline {
             sh 'ci/build-app.sh'
             archiveArtifacts 'app/build/libs/'
             sh 'ls'
-            stash 'code'
+            stash 'build'
             deleteDir()
             sh 'ls'
-
-
           }
         }
 
-        stage('clone down') {
-          steps {
-            stash excludes: '/.git/', name: 'code'
-          }
-        }
+
         stage('test app') {
           options {
             skipDefaultCheckout true
