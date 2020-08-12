@@ -29,6 +29,12 @@ pipeline {
 
           }
         }
+
+        stage('clone down') {
+          steps {
+            stash excludes: '/.git/', name: 'code'
+          }
+        }
         stage('test app') {
           options {
             skipDefaultCheckout true
@@ -43,11 +49,6 @@ pipeline {
             unstash 'code'
             sh 'ci/unit-test-app.sh'
             junit 'app/build/test-results/test/TEST-*.xml'
-          }
-        }
-        stage('clone down') {
-          steps {
-            stash excludes: '/.git/', name: 'code'
           }
         }
 
