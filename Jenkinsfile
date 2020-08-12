@@ -29,6 +29,22 @@ pipeline {
 
           }
         }
+        stage('test app') {
+          options {
+            skipDefaultCheckout true
+                  }
+          agent {
+            docker {
+              image 'gradle:jdk11'
+            }
+
+          }
+          steps {
+            unstash 'code'
+            sh 'ci/unit-test-app.sh'
+            junit 'app/build/test-results/test/TEST-*.xml'
+          }
+        }
         stage('clone down') {
           steps {
             stash excludes: '/.git/', name: 'code'
