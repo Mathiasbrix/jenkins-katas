@@ -80,12 +80,6 @@ pipeline {
       options {
         skipDefaultCheckout true
               }
-      agent {
-        docker {
-          image 'gradle:jdk11'
-        }
-
-      }
       steps {
         unstash 'code'
         sh 'ci/component-test.sh'
