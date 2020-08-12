@@ -10,6 +10,9 @@ pipeline {
         }
 
         stage('Build app') {
+          options {
+            skipDefaultCheckout true
+                  }
           agent {
             docker {
               image 'gradle:jdk11'
@@ -23,7 +26,7 @@ pipeline {
             sh 'ls'
             deleteDir()
             sh 'ls'
-            skipDefaultCheckout(true)
+
           }
         }
         stage('clone down') {
